@@ -1,1 +1,40 @@
 
+package com.example.knk;
+
+import java.sql.ResultSet;
+import javafx.scene.control.TableView;
+import java.sql.SQLException;
+
+public class Client {
+    private int clientID;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private boolean newsEnabled;
+    private boolean specialOffersEnabled;
+
+    public Client(int clientID, String firstName, String lastName, String email, boolean newsEnabled, boolean specialOffersEnabled) {
+        this.clientID = clientID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.newsEnabled = newsEnabled;
+        this.specialOffersEnabled = specialOffersEnabled;
+    }
+
+    public void createFromResultSet(ResultSet resultSet, TableView<Client> tableView) throws SQLException {
+        while (resultSet.next()) {
+            int clientID = resultSet.getInt("ClientID");
+            String firstName = resultSet.getString("FirstName");
+            String lastName = resultSet.getString("LastName");
+            String email = resultSet.getString("Email");
+            boolean newsEnabled = resultSet.getBoolean("NewsEnabled");
+            boolean specialOffersEnabled = resultSet.getBoolean("SpecialOffersEnabled");
+
+            Client client = new Client(clientID, firstName, lastName, email, newsEnabled, specialOffersEnabled);
+            tableView.getItems().add(client);
+        }
+    }
+
+    // Rest of the Client class code...
+}
